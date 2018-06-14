@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AdminsAdd</title>
+</head>
+<body>
+
+
+<form action="/admin/add/" method="POST">
+    user:<input type="text" name="username" />
+    email:<input type="text" name="email" />
+    pwd:<input type="password" name="password" />
+    <input type="submit" value="add" />
+</form>
+{% if admins %}
+<table border="1px">
+    <tr>
+        <th>UserName</th>
+        <th>Email</th>
+        <th> 删除</th>
+    </tr>
+    {% for u in admins %}
+        <tr>
+            <td>{{u.username}}</td>
+            <td>{{u.email}}</td>
+            <td> <button onclick="deletedata('{{u.username}}')">删除 </button></td>
+        </tr>
+    {% endfor %}
+    <!--<tr><input type="button" value="删除" onclick="deletedata()"/></tr>-->
+
+
+</table>
+{% endif %}
+</body>
+<script type="text/javascript">
+    function deletedata(data)
+    {
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{
+		//  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		// IE6, IE5 浏览器执行代码
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			windows.onload()
+		}
+	}
+	xmlhttp.open("GET","http://localhost:5000/admin/delete?username="+data,true);
+	xmlhttp.send();
+}
+</script>
+</html>
